@@ -693,10 +693,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6e04cfff28024a47a9c606c2d87ffba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DragDrop
-  cam: {fileID: 166489395}
+  mainCamera: {fileID: 166489395}
   draggableMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 4294967295
+  pointAction: {fileID: -3922999936517091712, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  clickAction: {fileID: 6998655932734621078, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  moveRigidbodyIfPresent: 1
+  setKinematicWhileDragging: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
