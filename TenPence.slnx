@@ -1,8 +1,7 @@
-﻿<Solution>
-  <Project Path="MerryYellow.CodeAssist.Editor.csproj" />
+<Solution>
   <Project Path="ThryAssemblyDefinition.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="ThryExternal.csproj" />
   <Project Path="Poi.Tools.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
 </Solution>
