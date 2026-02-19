@@ -10,10 +10,10 @@ public class RoomYearTriggers : MonoBehaviour
         [Min(0)]
         public int yearsToPass = 10;
 
-        [Tooltip("If true, fires once per room-entry. If false, can fire again every frame after threshold (usually keep true).")]
+        [Tooltip("If true, fires once total (lifetime). If false, can fire again every frame after threshold.")]
         public bool triggerOnce = true;
 
-        [Tooltip("Called when YearsPassedInRoom >= YearsToPass")]
+        [Tooltip("Called when TotalYearsPassed >= YearsToPass")]
         public UnityEvent onTriggered;
 
         [NonSerialized] public bool fired;
@@ -28,14 +28,17 @@ public class RoomYearTriggers : MonoBehaviour
 
     [Header("Read-only Debug")]
     [SerializeField] private int currentRoomIndex = -1;
-    [SerializeField] private int entryYear = 0;
     [SerializeField] private int currentRoomYear = 0;
-    [SerializeField] private int yearsPassedInRoom = 0;
+
+    [Tooltip("Sum of years experienced across all rooms (does NOT reset on room change).")]
+    [SerializeField] private int totalYearsPassed = 0;
+
+    private int _lastRoomIndex = int.MinValue;
+    private int _lastObservedYearInThatRoom = 0;
 
     public int CurrentRoomIndex => currentRoomIndex;
-    public int EntryYear => entryYear;
     public int CurrentRoomYear => currentRoomYear;
-    public int YearsPassedInRoom => yearsPassedInRoom;
+    public int TotalYearsPassed => totalYearsPassed;
 
     private void Awake()
     {
@@ -45,16 +48,16 @@ public class RoomYearTriggers : MonoBehaviour
 
     private void Start()
     {
-        // Initialize on spawn
+        // Initialize
         RefreshRoom(force: true);
-        RefreshYearsPassed();
+        RefreshAndAccumulateYears();
         EvaluateTriggers();
     }
 
     private void Update()
     {
         RefreshRoom(force: false);
-        RefreshYearsPassed();
+        RefreshAndAccumulateYears();
         EvaluateTriggers();
     }
 
@@ -68,32 +71,36 @@ public class RoomYearTriggers : MonoBehaviour
         if (force || newRoom != currentRoomIndex)
         {
             currentRoomIndex = newRoom;
+            _lastRoomIndex = newRoom;
 
             if (currentRoomIndex >= 0)
             {
-                // Record the room's CURRENT year as the entry year
-                entryYear = yearDirector.GetRoomYearInt(currentRoomIndex);
+                // When entering a room, start tracking from the room's current year
+                _lastObservedYearInThatRoom = yearDirector.GetRoomYearInt(currentRoomIndex);
             }
             else
             {
-                entryYear = 0;
+                _lastObservedYearInThatRoom = 0;
             }
-
-            ResetTriggerFlags(); // per-room-entry behavior
         }
     }
 
-    private void RefreshYearsPassed()
+    private void RefreshAndAccumulateYears()
     {
         if (yearDirector == null || currentRoomIndex < 0)
         {
             currentRoomYear = 0;
-            yearsPassedInRoom = 0;
             return;
         }
 
         currentRoomYear = yearDirector.GetRoomYearInt(currentRoomIndex);
-        yearsPassedInRoom = Mathf.Max(0, currentRoomYear - entryYear);
+
+        // Add only positive forward progress since last frame in THIS room
+        int delta = currentRoomYear - _lastObservedYearInThatRoom;
+        if (delta > 0)
+            totalYearsPassed += delta;
+
+        _lastObservedYearInThatRoom = currentRoomYear;
     }
 
     private void EvaluateTriggers()
@@ -109,22 +116,11 @@ public class RoomYearTriggers : MonoBehaviour
             if (t.triggerOnce && t.fired)
                 continue;
 
-            if (yearsPassedInRoom >= t.yearsToPass)
+            if (totalYearsPassed >= t.yearsToPass)
             {
                 t.fired = true;
                 t.onTriggered?.Invoke();
             }
-        }
-    }
-
-    private void ResetTriggerFlags()
-    {
-        if (triggers == null) return;
-
-        for (int i = 0; i < triggers.Length; i++)
-        {
-            if (triggers[i] != null)
-                triggers[i].fired = false;
         }
     }
 }

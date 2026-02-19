@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class RoomYearDirector : MonoBehaviour
@@ -9,8 +10,6 @@ public class RoomYearDirector : MonoBehaviour
     public const int RoomN = 1;
     public const int RoomF = 2;
 
-    // Defines how many real seconds are in 1 "year" for the Normal case (1 sec = 1 sec).
-    // Using 365 days. Change if you want a different calendar.
     private const double SecondsPerYear = 365.0 * 24.0 * 60.0 * 60.0; // 31,536,000
 
     [Serializable]
@@ -29,28 +28,30 @@ public class RoomYearDirector : MonoBehaviour
     [SerializeField] private double[] roomYears = new double[3] { 100, 2026, 3000 };
 
     [Header("Speed Presets (designer editable: X seconds = Y years)")]
-    [Tooltip("Slow: used for RoomS when player is in RoomN. (Default: 1 year = 1 sec)")]
-    [SerializeField] private TimePreset slow = new TimePreset { seconds = 31_536_000f, years = 1f };
+    [SerializeField] private TimePreset slow = new TimePreset { seconds = 31_536_000f, years = 1f };        // 1 year = 1 sec
+    [SerializeField] private TimePreset superSlow = new TimePreset { seconds = 315_360_000f, years = 1f };  // 10 years = 1 sec
+    [SerializeField] private TimePreset fast = new TimePreset { seconds = 1f, years = 1f };                // 1 sec = 1 year
+    [SerializeField] private TimePreset superFast = new TimePreset { seconds = 1f, years = 10f };          // 1 sec = 10 years
 
-    [Tooltip("Super Slow: used for RoomS when player is in RoomF. (Default: 10 years = 1 sec)")]
-    [SerializeField] private TimePreset superSlow = new TimePreset { seconds = 315_360_000f, years = 1f };
+    [Header("RoomN Pause")]
+    [Tooltip("Set true to pause year passing in RoomN for pauseSec seconds.")]
+    public bool timePaused = false;
 
-    [Tooltip("Fast: used for RoomF when player is in RoomN, and RoomN when player is in RoomS. (Default: 1 sec = 1 year)")]
-    [SerializeField] private TimePreset fast = new TimePreset { seconds = 1f, years = 1f };
-
-    [Tooltip("Super Fast: used for RoomF when player is in RoomS. (Default: 1 sec = 10 years)")]
-    [SerializeField] private TimePreset superFast = new TimePreset { seconds = 1f, years = 10f };
+    [Tooltip("How long RoomN time stays paused (seconds). Editable.")]
+    public float pauseSec = 30f;
 
     [Header("Debug")]
     [SerializeField] private bool logPlayerRoomChanges = false;
 
-    // Normal (not exposed): 1 sec = 1 sec
-    // => 1 real second advances the year-counter by 1 second worth of a year.
     private static readonly double normalYearsPerSecond = 1.0 / SecondsPerYear;
 
     public int CurrentPlayerRoomIndex { get; private set; } = -1;
 
     private int _lastPlayerRoomIndex = int.MinValue;
+
+    // --- new pause state ---
+    private bool _roomNPauseActive = false;
+    private Coroutine _pauseRoutine;
 
     private void Reset()
     {
@@ -59,6 +60,12 @@ public class RoomYearDirector : MonoBehaviour
 
     private void Update()
     {
+        // --- new pause trigger ---
+        if (timePaused && !_roomNPauseActive)
+        {
+            _pauseRoutine = StartCoroutine(PauseRoomNForSeconds());
+        }
+
         if (roomManager == null || player == null || roomYears == null || roomYears.Length < 3)
             return;
 
@@ -76,29 +83,15 @@ public class RoomYearDirector : MonoBehaviour
         // Advance each room year by its computed "years per real second"
         for (int i = 0; i < 3; i++)
         {
+            // --- new pause effect for RoomN only ---
+            if (i == RoomN && _roomNPauseActive)
+                continue;
+
             double yps = GetYearsPerSecondForRoom(i, CurrentPlayerRoomIndex);
             roomYears[i] += yps * dt;
         }
     }
 
-    /// <summary>
-    /// Returns YEARS per REAL second for a target room, based on where the player is.
-    ///
-    /// Baseline when player in RoomN:
-    /// - RoomN: Normal (1 sec = 1 sec)
-    /// - RoomS: Slow   (1 year = 1 sec)
-    /// - RoomF: Fast   (1 sec = 1 year)
-    ///
-    /// When player in RoomS:
-    /// - RoomN becomes Fast
-    /// - RoomF becomes Super Fast
-    /// - RoomS stays Slow
-    ///
-    /// When player in RoomF:
-    /// - RoomN becomes Slow
-    /// - RoomS becomes Super Slow
-    /// - RoomF stays Fast
-    /// </summary>
     private double GetYearsPerSecondForRoom(int targetRoom, int playerRoom)
     {
         // Baseline (player in RoomN)
@@ -156,5 +149,26 @@ public class RoomYearDirector : MonoBehaviour
         yearS = GetRoomYearInt(RoomS);
         yearN = GetRoomYearInt(RoomN);
         yearF = GetRoomYearInt(RoomF);
+    }
+
+    // --- new coroutine ---
+    private IEnumerator PauseRoomNForSeconds()
+    {
+        _roomNPauseActive = true;
+        Debug.Log($"RoomYearDirector: RoomN pause START for {pauseSec} sec");
+
+        // Important: do NOT reset timer if timePaused is spammed true.
+        // We only start this coroutine when !_roomNPauseActive.
+
+        float t = 0f;
+        while (t < pauseSec)
+        {
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        _roomNPauseActive = false;
+        timePaused = false;
+        Debug.Log("RoomYearDirector: RoomN pause END (timePaused reset to false)");
     }
 }
