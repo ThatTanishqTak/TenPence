@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 798939454235941853}
   - component: {fileID: 5537765215557813009}
   - component: {fileID: 3621248724384001761}
-  - component: {fileID: 1280187864031111073}
+  - component: {fileID: -7983446551152150689}
   m_Layer: 8
   m_Name: Letus
   m_TagString: Untagged
@@ -83,7 +83,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1280187864031111073
+--- !u!114 &-7983446551152150689
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -198,4 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0

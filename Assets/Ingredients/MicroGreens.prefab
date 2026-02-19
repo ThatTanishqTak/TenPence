@@ -103,7 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0
 --- !u!1 &5113902273551657685
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0
 --- !u!1 &5217173354518393638
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,10 +315,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c8721037878c545adf19a40aed2cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomYearTriggers
-  rawToAgedYears: 10
-  agedToSpoiledYears: 10
+  roomHandlerName: RoomHandler
   roomManager: {fileID: 3284770238397939835, guid: 9c1337b5caf9e234d8e5d1315d801e65, type: 3}
   yearDirector: {fileID: 2551945941457152406, guid: 9c1337b5caf9e234d8e5d1315d801e65, type: 3}
+  rawToAgedYears: 10
+  agedToSpoiledYears: 10
   triggers:
   - yearsToPass: 0
     triggerOnce: 1
@@ -365,6 +372,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  debugLogs: 1
+  debugRoomHandlerComponents: 0
   currentRoomIndex: -1
   currentRoomYear: 0
   totalYearsPassed: 0
@@ -530,4 +539,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0
