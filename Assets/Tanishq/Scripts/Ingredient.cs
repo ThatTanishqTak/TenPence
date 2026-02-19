@@ -2,6 +2,10 @@ using UnityEngine;
 
 public class Ingredient : MonoBehaviour
 {
+    [Header("Identity")]
+    [Tooltip("Unique ID used for orders (e.g. 'Bread', 'Tomato'). If empty, falls back to GameObject name (without '(Clone)').")]
+    public string ingredientId = "";
+
     [Tooltip("If > 0, overrides automatic thickness from bounds.")]
     public float thicknessOverride = 0f;
 
@@ -19,6 +23,7 @@ public class Ingredient : MonoBehaviour
         if (debugLogs)
         {
             Debug.Log("[Ingredient] Awake() on: " + name);
+            Debug.Log("[Ingredient] ingredientId: " + (string.IsNullOrWhiteSpace(ingredientId) ? "(EMPTY)" : ingredientId));
         }
 
         cachedRenderer = GetComponentInChildren<Renderer>();
@@ -46,6 +51,28 @@ public class Ingredient : MonoBehaviour
                 Debug.Log("[Ingredient] centerPivot already assigned: " + centerPivot.name);
             }
         }
+    }
+
+    public string GetId()
+    {
+        string id = ingredientId;
+
+        if (string.IsNullOrWhiteSpace(id))
+        {
+            id = gameObject.name;
+
+            if (id.EndsWith("(Clone)"))
+            {
+                id = id.Replace("(Clone)", "").Trim();
+            }
+        }
+
+        if (debugLogs)
+        {
+            Debug.Log("[Ingredient] GetId() on: " + name + " -> " + id);
+        }
+
+        return id;
     }
 
     public float GetThickness()
