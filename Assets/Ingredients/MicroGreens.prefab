@@ -222,6 +222,8 @@ GameObject:
   - component: {fileID: 6970708083178889996}
   - component: {fileID: 4511146704194734420}
   - component: {fileID: 8543718351934042032}
+  - component: {fileID: -972662613777596177}
+  - component: {fileID: -443726220142149452}
   m_Layer: 8
   m_Name: MicroGreens
   m_TagString: Untagged
@@ -307,8 +309,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c8721037878c545adf19a40aed2cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomYearTriggers
-  roomManager: {fileID: 0}
-  yearDirector: {fileID: 0}
+  rawToAgedYears: 10
+  agedToSpoiledYears: 10
+  roomManager: {fileID: 3284770238397939835, guid: 9c1337b5caf9e234d8e5d1315d801e65, type: 3}
+  yearDirector: {fileID: 2551945941457152406, guid: 9c1337b5caf9e234d8e5d1315d801e65, type: 3}
   triggers:
   - yearsToPass: 0
     triggerOnce: 1
@@ -393,6 +397,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be6f6813d335c84db407f2ee7c012d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParentHighlightController
+--- !u!114 &-972662613777596177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5217173354518393638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7db4e9403c1a44593eef3f81df2c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StartSpoilOnPickup
+  handLName: HandL
+  handRName: HandR
+  debugLogs: 1
+--- !u!114 &-443726220142149452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5217173354518393638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c4d0105da410c45be7987f9941b4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodSpoilProgressUI
+  foodName: Food
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  debugLogs: 0
 --- !u!1 &9005562259633666194
 GameObject:
   m_ObjectHideFlags: 0
