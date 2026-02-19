@@ -37,7 +37,7 @@
                     "name": "Interact",
                     "type": "Button",
                     "id": "852140f2-7766-474d-8707-702459ba45f3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": false
@@ -109,6 +109,24 @@
                     "name": "TeleportRoom2",
                     "type": "Button",
                     "id": "85660954-32ec-4dc6-a7bf-52995d39c3c1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DropL",
+                    "type": "Button",
+                    "id": "ad55b077-4642-4768-a11c-ddc768fd0ed8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DropR",
+                    "type": "Button",
+                    "id": "630505f1-9957-4472-80f4-4a2737430c94",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -531,6 +549,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "TeleportRoom2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "63727e81-334a-4e9d-aa29-b215cab409dd",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DropL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6362ded-c423-46b3-b447-bb22bb60cef2",
+                    "path": "<Keyboard>/g",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DropR",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
