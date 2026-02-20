@@ -168,4 +168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0

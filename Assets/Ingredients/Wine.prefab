@@ -103,7 +103,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0
 --- !u!1 &1913031726714392377
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,7 +210,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0
 --- !u!1 &5950230479990720282
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +317,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b6738460481d14a9175c76c28fb5d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LookHighlight
-  useEmission: 1
+  normalMaterial: {fileID: 2100000, guid: 60fa78001d05b8d4ca742d31ccee2a27, type: 2}
+  highlightMaterial: {fileID: 2100000, guid: 3dc05edfc1cb58c4cb6640a129cc48de, type: 2}
+  singleSlotOnly: 1
+  materialIndex: 0
 --- !u!1 &6120291337770953875
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +335,8 @@ GameObject:
   - component: {fileID: 7829448674584328481}
   - component: {fileID: 9005964485074739265}
   - component: {fileID: 1664484194139229798}
+  - component: {fileID: 2476580031354414797}
+  - component: {fileID: 3144924436499953465}
   m_Layer: 8
   m_Name: Wine
   m_TagString: Untagged
@@ -411,8 +422,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c8721037878c545adf19a40aed2cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomYearTriggers
-  roomManager: {fileID: 0}
-  yearDirector: {fileID: 0}
+  roomHandlerName: RoomHandler
+  roomManager: {fileID: 3284770238397939835, guid: 9c1337b5caf9e234d8e5d1315d801e65, type: 3}
+  yearDirector: {fileID: 2551945941457152406, guid: 9c1337b5caf9e234d8e5d1315d801e65, type: 3}
+  rawToAgedYears: 10
+  agedToSpoiledYears: 10
   triggers:
   - yearsToPass: 0
     triggerOnce: 1
@@ -465,6 +479,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  debugLogs: 1
+  debugRoomHandlerComponents: 0
   currentRoomIndex: -1
   currentRoomYear: 0
   totalYearsPassed: 0
@@ -497,3 +513,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1be6f6813d335c84db407f2ee7c012d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ParentHighlightController
+--- !u!114 &2476580031354414797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6120291337770953875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef7db4e9403c1a44593eef3f81df2c0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StartSpoilOnPickup
+  handLName: HandL
+  handRName: HandR
+  debugLogs: 1
+--- !u!114 &3144924436499953465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6120291337770953875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73c4d0105da410c45be7987f9941b4cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FoodSpoilProgressUI
+  foodName: Food
+  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  debugLogs: 0
