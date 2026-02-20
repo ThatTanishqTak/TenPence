@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73c4d0105da410c45be7987f9941b4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FoodSpoilProgressUI
-  foodName: Food
+  foodName: Balsamic Vinegar
   icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
   debugLogs: 0
 --- !u!1 &3454370855276748870

@@ -33,6 +33,8 @@ TagManager:
   - rawW
   - agedW
   - spoiledW
+  - SCrystal
+  - FCrystal
   layers:
   - Default
   - TransparentFX
