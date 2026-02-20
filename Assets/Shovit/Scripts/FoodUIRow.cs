@@ -10,10 +10,18 @@ public class FoodUIRow : MonoBehaviour
     [SerializeField] private TMP_Text ageText;
     [SerializeField] private Slider progressSlider;
 
+    [Header("Optional: Assign Fill Image (recommended)")]
+    [SerializeField] private Image fillImage; // the Image on "Fill"
+
     [Header("Marker Line (|)")]
     [SerializeField] private RectTransform markerParent; // optional, else uses slider RectTransform
     [SerializeField] private float markerWidth = 4f;
     [SerializeField] private float markerHeightMultiplier = 1.2f;
+
+    [Header("Fill Colors")]
+    [SerializeField] private Color rawFillColor = Color.yellow;
+    [SerializeField] private Color agedFillColor = Color.green;
+    [SerializeField] private Color spoiledFillColor = Color.red;
 
     private RectTransform _sliderRT;
     private RectTransform _markerRT;
@@ -25,13 +33,19 @@ public class FoodUIRow : MonoBehaviour
 
         if (progressSlider != null)
         {
-            progressSlider.interactable = false; // player can't drag it
+            progressSlider.interactable = false;
             _sliderRT = progressSlider.GetComponent<RectTransform>();
+        }
+
+        // Auto-find Fill image if not assigned
+        if (fillImage == null && progressSlider != null)
+        {
+            var fill = progressSlider.transform.Find("Fill Area/Fill");
+            if (fill != null) fillImage = fill.GetComponent<Image>();
         }
 
         if (markerParent == null && progressSlider != null)
         {
-            // Prefer Fill Area if it exists
             var fa = progressSlider.transform.Find("Fill Area") as RectTransform;
             markerParent = fa != null ? fa : _sliderRT;
         }
@@ -50,10 +64,23 @@ public class FoodUIRow : MonoBehaviour
         progressSlider.maxValue = totalYears;
         progressSlider.value = clampedAge;
 
-        if (ageText != null)
-            ageText.text = clampedAge.ToString();
-
+        // Update marker position (raw->aged point)
         UpdateMarker(rawToAgedYears, totalYears);
+
+        // Update ONLY the fill color
+        UpdateFillColor(ageYears, rawToAgedYears, totalYears);
+    }
+
+    private void UpdateFillColor(int ageYears, int rawToAgedYears, int totalYears)
+    {
+        if (fillImage == null) return;
+
+        Color c;
+        if (ageYears >= totalYears) c = spoiledFillColor; // spoiled or above
+        else if (ageYears >= rawToAgedYears) c = agedFillColor;    // aged
+        else c = rawFillColor;     // raw
+
+        fillImage.color = c;
     }
 
     private void CreateMarkerIfNeeded()
